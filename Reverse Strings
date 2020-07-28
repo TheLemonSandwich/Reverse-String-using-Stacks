@@ -1,0 +1,96 @@
+#include <iostream>
+#include <string>
+using namespace std;
+struct Node {
+	char data;
+	Node* next;
+};
+class Stack
+{
+public:
+	char pop();
+	char top();
+	bool Empty();
+	void push(char data);
+	char* listJoin(char* str);
+	Stack();
+	~Stack(); // To make sure there is no memory
+	int size;
+private:
+	Node* top1 = NULL;
+};
+
+bool Stack::Empty() // To check wheteher top node is empty
+{
+	return top1 == NULL;
+
+}
+
+char Stack::top()
+{
+	if (!Empty()) {
+		char value = top1->data;
+		return value;
+	}
+}
+char Stack::pop()
+{
+	if (!Empty()) {
+		char result = top1->data;
+		Node* oldtop = top1;
+		top1 = oldtop->next;
+		delete oldtop;
+		return result;
+	}
+}
+void Stack::push(char data)
+{
+
+	Node* temp = new Node;
+	temp->data = data;
+	temp->next = top1;
+	top1 = temp;
+}
+
+Stack::Stack()
+{
+	// initializing a constructor
+}
+Stack::~Stack()
+{
+
+}
+
+char* Stack::listJoin(char* str)
+{
+	for (int j = 0; j <= size; j++)
+	{
+		str[j] = pop();
+	}
+	return str;
+}
+
+int main()
+{
+	string data;
+	Stack s;
+	cout << "Write the data you want to reverse: ";
+	getline(cin, data);
+	s.size = data.length();
+	char* str = new char[s.size];
+	int size;
+	for (int i = 0; i <= s.size; i++)
+	{
+		if (data.at(i) == '\0')
+			size = i;
+		else {
+			str[i] = data.at(i);
+			s.push(str[i]);
+		}
+	}
+	char* p = new char[size];
+	for (int i = 0; i < size; i++)
+		p[i] = str[i];
+	cout << "asdasd: " << sizeof(p) / sizeof(p[0]);
+	cout << s.listJoin(str);
+}
